@@ -151,7 +151,6 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, updater):
         animator.add(epoch + 1, train_metrics + (test_acc,))
     train_loss, train_acc = train_metrics
     # assert加逗号后面这个是assert出错的时候给提示信息
-    plt.show()
     assert train_loss < 0.5, "train_loss"
     assert train_acc <= 1 and train_acc > 0.7, "train_acc"
     assert test_acc <= 1 and test_acc > 0.7, "test_acc"
@@ -170,3 +169,13 @@ updater = Updater([W, b], lr = 0.1)
 num_epochs = 10
 train_ch3(net, train_iter, test_iter, cross_entropy, num_epochs, updater)
 
+def predict_ch3(net, test_iter, n=6):
+    for X,y in test_iter:
+        break
+    trues = d2l.get_fashion_mnist_labels(y)
+    preds = d2l.get_fashion_mnist_labels(tf.argmax(net(X), axis = 1))
+    titles = [true + '\n' + pred for true, pred in zip(trues, preds)]
+    d2l.show_images(tf.reshape(X[0:n], (n, 28, 28)), 1, n, titles=titles[0:n])
+    plt.show()
+
+predict_ch3(net, test_iter)
